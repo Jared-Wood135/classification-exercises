@@ -17,7 +17,7 @@
 # =======================================================================================================
 
 '''
-The purpose of this document is to ensure that users have .csv files required for particular
+The purpose of this file is to ensure that users have .csv files required for particular
 exercises within this repository
 '''
 
