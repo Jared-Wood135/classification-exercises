@@ -30,6 +30,7 @@ consistency with users and starting data
 
 import pandas as pd
 import acquire
+from sklearn.model_selection import train_test_split
 
 # =======================================================================================================
 # Imports END
@@ -91,11 +92,15 @@ def prep_telco():
 # prep_split START
 # =======================================================================================================
 
-def prep_split():
+def prep_split(df):
     '''
-    Takes a dataframe and splits the data into a train, test and validate datasets
+    Takes a dataframe and splits the data into a train, validate and test datasets
     '''
-    print('stuff')
+    strat = input('What column do you want to stratify on')
+    train_val, test = train_test_split(df, train_size=0.8, random_state=1349, stratify=df[strat])
+    train, validate = train_test_split(train_val, train_size=0.7, random_state=1349, stratify=train_val[strat])
+    print(f"train.shape:{train.shape}\nvalidate.shape:{validate.shape}\ntest.shape:{test.shape}")
+    return train, validate, test
 
 # =======================================================================================================
 # prep_split END
