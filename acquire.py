@@ -38,6 +38,9 @@ import os
 # =======================================================================================================
 
 def get_titanic_data():
+    '''
+    Creates 'titanic.csv' if it does not exist then reads the csv as a pandas dataframe
+    '''
     if os.path.exists('titanic.csv'):
         return pd.read_csv('titanic.csv', index_col=0)
     else:
@@ -56,6 +59,9 @@ def get_titanic_data():
 # =======================================================================================================
 
 def get_iris_data():
+    '''
+    Creates 'iris.csv' if it does not exist then reads the csv as a pandas dataframe
+    '''
     if os.path.exists('iris.csv'):
         return pd.read_csv('iris.csv', index_col=0)
     else:
@@ -78,6 +84,9 @@ def get_iris_data():
 # =======================================================================================================
 
 def get_telco_data():
+    '''
+    Creates 'telco.csv' if it does not exist then reads the csv as a pandas dataframe
+    '''
     if os.path.exists('telco.csv'):
         return pd.read_csv('telco.csv', index_col=0)
     else:
