@@ -45,6 +45,8 @@ def prep_iris():
     iris_db = acquire.get_iris_data()
     iris_db = iris_db.drop(columns=['species_id', 'measurement_id'])
     iris_db = iris_db.rename(columns={'species_name' : 'species'})
+    dummies = pd.get_dummies(iris_db['species'])
+    iris_db = pd.concat([iris_db, dummies], axis=1)
     return iris_db
 
 # =======================================================================================================
@@ -59,7 +61,11 @@ def prep_titanic():
     consistent data structuring
     '''
     titanic_db = acquire.get_titanic_data()
-    titanic_db = titanic_db.drop(columns=['passenger_id', 'sibsp', 'parch', 'embarked', 'class'])
+    titanic_db = titanic_db.drop(columns=['passenger_id', 'sibsp', 'parch', 'embarked', 'class', 'deck'])
+    titanic_db.embark_town = titanic_db.embark_town.fillna('Southampton')
+    titanic_db.age = titanic_db.age.fillna(titanic_db.age.mean())
+    dummies = pd.get_dummies(titanic_db[['sex', 'embark_town']])
+    titanic_db = pd.concat([titanic_db, dummies], axis=1)
     return titanic_db
 
 # =======================================================================================================
@@ -75,6 +81,8 @@ def prep_telco():
     '''
     telco_db = acquire.get_telco_data()
     telco_db = telco_db.drop(columns=['contract_type_id', 'payment_type_id', 'internet_service_type_id'])
+    dummies = pd.get_dummies(telco_db.select_dtypes(include='object'))
+    telco_db = pd.concat([telco_db, dummies], axis=1)
     return telco_db
 
 # =======================================================================================================
