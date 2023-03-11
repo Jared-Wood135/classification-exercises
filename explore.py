@@ -53,6 +53,7 @@ def explore_quantitative(df):
         plt.title(f'Distribution of {col}')
         plt.show()
         print(quantitative_col[col].describe().to_markdown())
+        print('\n=======================================================\n')
 
 # =======================================================================================================
 # explore_quantitative END
@@ -75,6 +76,7 @@ def explore_categorical(df):
         table = pd.concat([colval, colpct], axis=1)
         table.columns = ['Count', 'Percentage']
         print(table)
+        print('\n=======================================================\n')
 
 # =======================================================================================================
 # explore_categorical END
@@ -101,7 +103,9 @@ def explore_cat_vs_val(df):
         plt.axhline(y=df[y].mean(), color='r', label=f'Mean: {round(df[y].mean(), 2)}')
         plt.legend()
         plt.show()
-        
+        print(df.groupby(x)[y].describe().T.to_markdown())
+        print('\n=======================================================\n')
+
 
 # =======================================================================================================
 # explore_categorical END
