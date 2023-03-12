@@ -8,6 +8,7 @@
 3. explore_quantitative
 4. explore_categorical
 5. explore_val_vs_cat
+6. explore_mannwhitneyu
 '''
 
 # =======================================================================================================
@@ -30,6 +31,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import itertools
+from scipy import stats
 import acquire
 import prepare
 
@@ -108,7 +110,17 @@ def explore_cat_vs_val(df):
 
 
 # =======================================================================================================
-# explore_categorical END
-# explore_categorical TO explore_val_vs_cat
-# explore_val_vs_cat START
+# explore_val_vs_cat END
+# explore_val_vs_cat TO explore_mannwhitneyu
+# explore_mannwhitneyu START
 # =======================================================================================================
+
+def explore_mannwhitneyu(df):
+    col = input("What column do you want unique combinations of?\n")
+    val = input("What value do you want to compare with?\n")
+    combos = itertools.combinations(df[col].unique(), 2)
+    for x in combos:
+        print(f'\033[32m{x[0]}\033[0m and \033[32m{x[1]}\033[0m relationship:')
+        stat, pval = stats.mannwhitneyu(df[df[col] == x[0]][val], df[df[col] == x[1]][val])
+        print(f'\033[32mStat:\033[0m {stat}\n\033[32mP-value:\033[0m {pval}\n')
+
