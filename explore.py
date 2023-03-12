@@ -5,10 +5,10 @@
 '''
 1. Orientation
 2. Imports
-3. explore_quantitative
-4. explore_categorical
-5. explore_val_vs_cat
-6. explore_mannwhitneyu
+3. quantitative
+4. categorical
+5. val_vs_cat
+6. mannwhitneyu
 '''
 
 # =======================================================================================================
@@ -37,8 +37,8 @@ import prepare
 
 # =======================================================================================================
 # Imports END
-# Imports TO explore_quantitative
-# explore_quantitative START
+# Imports TO quantitative
+# quantitative START
 # =======================================================================================================
 
 def quantitative(df):
@@ -58,9 +58,9 @@ def quantitative(df):
         print('\n=======================================================\n')
 
 # =======================================================================================================
-# explore_quantitative END
-# explore_quantitative TO explore_categorical
-# explore_categorical START
+# quantitative END
+# quantitative TO categorical
+# categorical START
 # =======================================================================================================
 
 def categorical(df):
@@ -81,9 +81,9 @@ def categorical(df):
         print('\n=======================================================\n')
 
 # =======================================================================================================
-# explore_categorical END
-# explore_categorical TO explore_val_vs_cat
-# explore_val_vs_cat START
+# categorical END
+# categorical TO val_vs_cat
+# val_vs_cat START
 # =======================================================================================================
 
 def cat_vs_val(df):
@@ -110,9 +110,9 @@ def cat_vs_val(df):
 
 
 # =======================================================================================================
-# explore_val_vs_cat END
-# explore_val_vs_cat TO explore_mannwhitneyu
-# explore_mannwhitneyu START
+# val_vs_cat END
+# val_vs_cat TO mannwhitneyu
+# mannwhitneyu START
 # =======================================================================================================
 
 def mannwhitneyu(df):
