@@ -41,7 +41,7 @@ import prepare
 # explore_quantitative START
 # =======================================================================================================
 
-def explore_quantitative(df):
+def quantitative(df):
     '''
     Takes in a dataframe and gets all of the float and int dtype columns then 
     returns a histogram, boxplot, and a .describe for each column
@@ -63,7 +63,7 @@ def explore_quantitative(df):
 # explore_categorical START
 # =======================================================================================================
 
-def explore_categorical(df):
+def categorical(df):
     '''
     Takes in a dataframe and gets all of the object dtype columns then 
     returns a histogram and a total count and percentage table for each unique value
@@ -86,7 +86,7 @@ def explore_categorical(df):
 # explore_val_vs_cat START
 # =======================================================================================================
 
-def explore_cat_vs_val(df):
+def cat_vs_val(df):
     '''
     Takes in a dataframe and separates all of the columns into category or values then
     returns a bargraph of each unique combination of category and value columns
@@ -115,7 +115,11 @@ def explore_cat_vs_val(df):
 # explore_mannwhitneyu START
 # =======================================================================================================
 
-def explore_mannwhitneyu(df):
+def mannwhitneyu(df):
+    '''
+    Takes in a dataframe and user's desired columns and returns manwhitneyu results for each
+    unique combination of the inputted column.
+    '''
     col = input("What column do you want unique combinations of?\n")
     val = input("What value do you want to compare with?\n")
     combos = itertools.combinations(df[col].unique(), 2)
