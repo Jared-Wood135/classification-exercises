@@ -105,7 +105,7 @@ def prep_telco():
 # prep_split START
 # =======================================================================================================
 
-def prep_split(df):
+def split(df):
     '''
     Takes a dataframe and splits the data into a train, validate and test datasets
     '''
