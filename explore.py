@@ -120,11 +120,14 @@ def mannwhitneyu(df):
     Takes in a dataframe and user's desired columns and returns manwhitneyu results for each
     unique combination of the inputted column.
     '''
-    col = input("What column do you want unique combinations of?\n")
-    val = input("What value do you want to compare with?\n")
-    combos = itertools.combinations(df[col].unique(), 2)
+    cat_col = input("What column do you want unique combinations of?\n")
+    combos = itertools.combinations(df[cat_col].unique(), 2)
+    val_col = []
+    for col in df:
+        if (df[col].dtype == 'float64') | (df[col].dtype == 'int'):
+            val_col.append(col)
     for x in combos:
-        print(f'\033[32m{x[0]}\033[0m and \033[32m{x[1]}\033[0m relationship:')
-        stat, pval = stats.mannwhitneyu(df[df[col] == x[0]][val], df[df[col] == x[1]][val])
-        print(f'\033[32mStat:\033[0m {stat}\n\033[32mP-value:\033[0m {pval}\n')
-
+        for y in val_col:
+            print(f'\033[32m{x[0]}\033[0m and \033[32m{x[1]}\033[0m by \033[32m{y}\033[0m relationship:')
+            stat, pval = stats.mannwhitneyu(df[df[cat_col] == x[0]][y], df[df[cat_col] == x[1]][y])
+            print(f'\033[32mStat:\033[0m {stat}\n\033[32mP-value:\033[0m {pval}\n')
