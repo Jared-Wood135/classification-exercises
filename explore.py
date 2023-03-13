@@ -131,3 +131,19 @@ def mannwhitneyu(df):
             print(f'\033[32m{x[0]}\033[0m and \033[32m{x[1]}\033[0m by \033[32m{y}\033[0m relationship:')
             stat, pval = stats.mannwhitneyu(df[df[cat_col] == x[0]][y], df[df[cat_col] == x[1]][y])
             print(f'\033[32mStat:\033[0m {stat}\n\033[32mP-value:\033[0m {pval}\n')
+
+
+
+def swarms(df):
+    cat_col = []
+    val_col = []
+    for col in df:
+        if df[col].dtype == 'object':
+            cat_col.append(col)
+        elif ((df[col].dtype == ('float64')) | (df[col].dtype == ('int'))):
+            val_col.append(col)
+    pairs = list(itertools.product(cat_col, val_col))
+    for x, y in pairs:
+        print(f'Swarmplot of \033[32m{x}\033[0m and \033[32m{y}\033[0m Relationship')
+        sns.swarmplot(df[x], df[y])
+        plt.show()
