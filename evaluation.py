@@ -208,7 +208,7 @@ def f1_score(df, actual_col, Truelabel, Falselabel):
         matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
         precision = (matrix[0, 0] / (matrix[0, 0] + matrix[0, 1]))
         recall = (matrix[0, 0] / (matrix[0, 0] + matrix[1, 0]))
-        ratio = ((precision * recall) / (precision + recall))
+        ratio = (2 * ((precision * recall) / (precision + recall)))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
         ratios_dict[col] = ratio
     del ratios_dict[actual_col]
