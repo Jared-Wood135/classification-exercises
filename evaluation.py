@@ -54,10 +54,18 @@ def specificity(df, actual_col, Truelabel, Falselabel):
     Specificity measures how well a model predicts negative outcomes...
     Specificity = (TN / (FP + TN))
     '''
+    ratios_dict = {}
     for col in df:
         matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
         result = (matrix[1, 1] / (matrix[0, 1] + matrix[1, 1]))
         print(f'\033[32m{col}:\033[0m {result:.2%}\n')
+        ratios_dict[col] = result
+    del ratios_dict[actual_col]
+    max_col = max(ratios_dict, key=ratios_dict.get)
+    max_ratio = ratios_dict[max_col]
+    min_col = min(ratios_dict, key=ratios_dict.get)
+    min_ratio = ratios_dict[min_col]
+    print(f'\033[31mHIGHEST VALUE =\033[0m \033[32m{max_col}\033[0m: {max_ratio:.2%}\n\033[31mLOWEST VALUE =\033[0m \033[32m{min_col}\033[0m: {min_ratio:.2%}')
 
 # =======================================================================================================
 # specificity END
@@ -71,9 +79,17 @@ def accuracy(df, actual_col):
     Accuracy measures how many correct predictions over total possible predictions...
     Accuracy = ((TP + TN) / (TP + FP + FN + TN))
     '''
+    ratios_dict = {}
     for col in df:
         ratio = (df[col] == df[actual_col]).mean()
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
+        ratios_dict[col] = ratio
+    del ratios_dict[actual_col]
+    max_col = max(ratios_dict, key=ratios_dict.get)
+    max_ratio = ratios_dict[max_col]
+    min_col = min(ratios_dict, key=ratios_dict.get)
+    min_ratio = ratios_dict[min_col]
+    print(f'\033[31mHIGHEST VALUE =\033[0m \033[32m{max_col}\033[0m: {max_ratio:.2%}\n\033[31mLOWEST VALUE =\033[0m \033[32m{min_col}\033[0m: {min_ratio:.2%}')
 
 # =======================================================================================================
 # accuracy END
@@ -87,10 +103,18 @@ def precision(df, actual_col, Truelabel, Falselabel):
     Precision measures how many of the positive predictions were correct...
     Precision = (TP / (TP + FP))
     '''
+    ratios_dict = {}
     for col in df:
         matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
         ratio = (matrix[0, 0] / (matrix[0, 0] + matrix[0, 1]))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
+        ratios_dict[col] = ratio
+    del ratios_dict[actual_col]
+    max_col = max(ratios_dict, key=ratios_dict.get)
+    max_ratio = ratios_dict[max_col]
+    min_col = min(ratios_dict, key=ratios_dict.get)
+    min_ratio = ratios_dict[min_col]
+    print(f'\033[31mHIGHEST VALUE =\033[0m \033[32m{max_col}\033[0m: {max_ratio:.2%}\n\033[31mLOWEST VALUE =\033[0m \033[32m{min_col}\033[0m: {min_ratio:.2%}')
 
 # =======================================================================================================
 # precision END
@@ -104,10 +128,18 @@ def recall(df, actual_col, Truelabel, Falselabel):
     Recall measures how the model handled all positive outcomes...
     Recall = (TP / (TP + FN))
     '''
+    ratios_dict = {}
     for col in df:
         matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
         ratio = (matrix[0, 0] / (matrix[0, 0] + matrix[1, 0]))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
+        ratios_dict[col] = ratio
+    del ratios_dict[actual_col]
+    max_col = max(ratios_dict, key=ratios_dict.get)
+    max_ratio = ratios_dict[max_col]
+    min_col = min(ratios_dict, key=ratios_dict.get)
+    min_ratio = ratios_dict[min_col]
+    print(f'\033[31mHIGHEST VALUE =\033[0m \033[32m{max_col}\033[0m: {max_ratio:.2%}\n\033[31mLOWEST VALUE =\033[0m \033[32m{min_col}\033[0m: {min_ratio:.2%}')
 
 # =======================================================================================================
 # recall END
@@ -121,10 +153,18 @@ def sensitivity_true_positive_rate(df, actual_col, Truelabel, Falselabel):
     Sensitivity true positive rate measures the proportion of positives correctly identified...
     Sensitivity true positive rate = (TP / (TP + FN))
     '''
+    ratios_dict = {}
     for col in df:
         matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
         ratio = (matrix[0, 0] / (matrix[0, 0] + matrix[1, 0]))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
+        ratios_dict[col] = ratio
+    del ratios_dict[actual_col]
+    max_col = max(ratios_dict, key=ratios_dict.get)
+    max_ratio = ratios_dict[max_col]
+    min_col = min(ratios_dict, key=ratios_dict.get)
+    min_ratio = ratios_dict[min_col]
+    print(f'\033[31mHIGHEST VALUE =\033[0m \033[32m{max_col}\033[0m: {max_ratio:.2%}\n\033[31mLOWEST VALUE =\033[0m \033[32m{min_col}\033[0m: {min_ratio:.2%}')
 
 # =======================================================================================================
 # sensitivity_true_positive_rate END
@@ -138,10 +178,18 @@ def negative_predictive_value(df, actual_col, Truelabel, Falselabel):
     Negative predictive value measures the probability that a predicted negative is a true negative...
     Negative predictive value = (TN / (TN + FN))
     '''
+    ratios_dict = {}
     for col in df:
         matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
         ratio = (matrix[1, 1] / (matrix[1, 1] + matrix[1, 0]))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
+        ratios_dict[col] = ratio
+    del ratios_dict[actual_col]
+    max_col = max(ratios_dict, key=ratios_dict.get)
+    max_ratio = ratios_dict[max_col]
+    min_col = min(ratios_dict, key=ratios_dict.get)
+    min_ratio = ratios_dict[min_col]
+    print(f'\033[31mHIGHEST VALUE =\033[0m \033[32m{max_col}\033[0m: {max_ratio:.2%}\n\033[31mLOWEST VALUE =\033[0m \033[32m{min_col}\033[0m: {min_ratio:.2%}')
 
 # =======================================================================================================
 # negative_predictive_value END
@@ -155,12 +203,20 @@ def f1_score(df, actual_col, Truelabel, Falselabel):
     F1 score measures a model's accuracy on a dataset...
     F1 score = 2 * ((Precision * Recall) / (Precision + Recall))
     '''
+    ratios_dict = {}
     for col in df:
         matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
         precision = (matrix[0, 0] / (matrix[0, 0] + matrix[0, 1]))
         recall = (matrix[0, 0] / (matrix[0, 0] + matrix[1, 0]))
         ratio = ((precision * recall) / (precision + recall))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
+        ratios_dict[col] = ratio
+    del ratios_dict[actual_col]
+    max_col = max(ratios_dict, key=ratios_dict.get)
+    max_ratio = ratios_dict[max_col]
+    min_col = min(ratios_dict, key=ratios_dict.get)
+    min_ratio = ratios_dict[min_col]
+    print(f'\033[31mHIGHEST VALUE =\033[0m \033[32m{max_col}\033[0m: {max_ratio:.2%}\n\033[31mLOWEST VALUE =\033[0m \033[32m{min_col}\033[0m: {min_ratio:.2%}')
 
 # =======================================================================================================
 # f1_score END
