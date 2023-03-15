@@ -54,8 +54,27 @@ import explore
 # decisiontree_model_iterator START
 # =======================================================================================================
 
-def decisiontree_model_iterator():
-    print('yeet')
+def decisiontree_model_iterator(df, x_col, y_col, stratify, mindepthrange, maxdepthrange):
+    # VVV Variables VVV
+    train, validate, test = prepare.split(df, stratify)
+    x_train = train[x_col]
+    y_train = train[y_col]
+    x_validate = validate[x_col]
+    y_validate = validate[y_col]
+    x_test = test[x_col]
+    y_test = test[y_col]
+    modelnum = 0
+    modelsdict = {}
+    # VVV Create, Fit, Predict Models VVV
+    for i in range(int(mindepthrange), int(maxdepthrange)):
+        modelnum += 1
+        f'clf{modelnum}' = DecisionTreeClassifier(max_depth=i)
+        f'clf{modelnum}'.fit(x_train, y_train)
+        f'clf{modelnum}'.predict(x_train)
+        modelsdict['model'] = f'clf{modelnum}'
+        modelsdict['train_score'] = round(f'clf{modelnum}'.score(x_train, y_train), 5)
+        modelsdict['validate_score'] = round(f'clf{modelnum}'.score(x_validate, y_validate), 5)
+        modelsdict['diff'] = round(abs((f'clf{modelnum}'.score(x_train, y_train)) - (f'clf{modelnum}'.score(x_validate, y_validate))), 5)
 
 # =======================================================================================================
 # decisiontree_model_iterator END
