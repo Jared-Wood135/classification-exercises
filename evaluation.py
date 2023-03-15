@@ -12,6 +12,7 @@
 7. sensitivity_true_positive_rate
 8. negative_predictive_value
 9. f1_score
+10. train_val_scores
 '''
 
 # =======================================================================================================
@@ -38,9 +39,25 @@ sklearn.metrics.confusion_matrix returns a 2x2 array which then means:
 # Imports START
 # =======================================================================================================
 
+# Basic sheiza
+import numpy as np
 import pandas as pd
-import sklearn.metrics
-from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Stat/Exploration
+from scipy import stats
+
+# Modeling
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, export_text, plot_tree
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.ensemble import RandomForestClassifier
+
+# .py files
+import acquire
+import prepare
+import explore
 
 # =======================================================================================================
 # Imports END
@@ -220,4 +237,47 @@ def f1_score(df, actual_col, Truelabel, Falselabel):
 
 # =======================================================================================================
 # f1_score END
+# f1_score TO train_val_scores
+# train_val_scores START
+# =======================================================================================================
+
+def train_val_scores(train_df, validate_df, x_cols, y_cols, models_list):
+    '''
+    Returns train and validate scores for all of the models in the models_list as well as the top and lowest performers...
+    '''
+    train_dict = {}
+    validate_dict = {}
+    performance_dict = {}
+    modelnum = 0
+    for x in models_list:
+        modelnum += 1
+        train_score = round(x.score(train_df[x_cols], train_df[y_cols]), 2)
+        validate_score = round(x.score(validate_df[x_cols], validate_df[y_cols]), 2)
+        train_dict[modelnum] = train_score
+        validate_dict[modelnum] = validate_score
+        diff = abs(train_score - validate_score)
+        performance_dict[modelnum] = diff
+        print(f'\033[32mmodel{modelnum}\033[0m Train Score: {train_score}')
+        print(f'\033[32mmodel{modelnum}\033[0m Validate Score: {validate_score}\n')
+    train_max_model = max(train_dict, key=train_dict.get)
+    train_max_pct = train_dict[train_max_model]
+    train_min_model = min(train_dict, key=train_dict.get)
+    train_min_pct = train_dict[train_min_model]
+    validate_max_model = max(validate_dict, key=validate_dict.get)
+    validate_max_pct = validate_dict[validate_max_model]
+    validate_min_model = min(validate_dict, key=validate_dict.get)
+    validate_min_pct = validate_dict[validate_min_model]
+    performance_lowest_model = max(performance_dict, key=performance_dict.get)
+    performance_lowest_pct = performance_dict[performance_lowest_model]
+    performance_highest_model = min(performance_dict, key=performance_dict.get)
+    performance_highest_pct = performance_dict[performance_highest_model]
+    print(f'\033[31mHIGHEST VALUE (TRAIN)\033[0m = {train_max_model}: {train_max_pct}')
+    print(f'\033[31mLOWEST VALUE (TRAIN)\033[0m = {train_min_model}: {train_min_pct}')
+    print(f'\033[31mHIGHEST VALUE (VALIDATE)\033[0m = {validate_max_model}: {validate_max_pct}')
+    print(f'\033[31mLOWEST VALUE (VALIDATE)\033[0m = {validate_min_model}: {validate_min_pct}')
+    print(f'\033[31mHIGHEST DIFF\033[0m = {performance_lowest_model}: {performance_lowest_pct}')
+    print(f'\033[31mLOWEST DIFF\033[0m = {performance_highest_model}: {performance_highest_pct}')
+
+# =======================================================================================================
+# train_val_scores END
 # =======================================================================================================
