@@ -257,8 +257,8 @@ def train_val_scores(train_df, validate_df, x_cols, y_cols, models_list):
         validate_dict[modelnum] = validate_score
         diff = abs(train_score - validate_score)
         performance_dict[modelnum] = diff
-        print(f'\033[32mmodel{modelnum}\033[0m Train Score: {train_score}')
-        print(f'\033[32mmodel{modelnum}\033[0m Validate Score: {validate_score}\n')
+        print(f'\033[32mmodel{modelnum}\033[0m Train Score: {train_score:.2%}')
+        print(f'\033[32mmodel{modelnum}\033[0m Validate Score: {validate_score:.2%}\n')
     train_max_model = max(train_dict, key=train_dict.get)
     train_max_pct = train_dict[train_max_model]
     train_min_model = min(train_dict, key=train_dict.get)
@@ -271,12 +271,12 @@ def train_val_scores(train_df, validate_df, x_cols, y_cols, models_list):
     performance_lowest_pct = performance_dict[performance_lowest_model]
     performance_highest_model = min(performance_dict, key=performance_dict.get)
     performance_highest_pct = performance_dict[performance_highest_model]
-    print(f'\033[31mHIGHEST VALUE (TRAIN)\033[0m = \033[32mmodel{train_max_model}\033[0m: {train_max_pct}')
-    print(f'\033[31mLOWEST VALUE (TRAIN)\033[0m = \033[32mmodel{train_min_model}\033[0m: {train_min_pct}')
-    print(f'\033[31mHIGHEST VALUE (VALIDATE)\033[0m = \033[32mmodel{validate_max_model}\033[0m: {validate_max_pct}')
-    print(f'\033[31mLOWEST VALUE (VALIDATE)\033[0m = \033[32mmodel{validate_min_model}\033[0m: {validate_min_pct}')
-    print(f'\033[31mHIGHEST DIFF\033[0m = \033[32mmodel{performance_lowest_model}\033[0m: {performance_lowest_pct}')
-    print(f'\033[31mLOWEST DIFF\033[0m = \033[32mmodel{performance_highest_model}\033[0m: {performance_highest_pct}')
+    print(f'\033[31mHIGHEST VALUE (TRAIN)\033[0m = \033[32mmodel{train_max_model}\033[0m: {train_max_pct:.2%}')
+    print(f'\033[31mLOWEST VALUE (TRAIN)\033[0m = \033[32mmodel{train_min_model}\033[0m: {train_min_pct:.2%}')
+    print(f'\033[31mHIGHEST VALUE (VALIDATE)\033[0m = \033[32mmodel{validate_max_model}\033[0m: {validate_max_pct:.2%}')
+    print(f'\033[31mLOWEST VALUE (VALIDATE)\033[0m = \033[32mmodel{validate_min_model}\033[0m: {validate_min_pct:.2%}')
+    print(f'\033[31mHIGHEST DIFF\033[0m = \033[32mmodel{performance_lowest_model}\033[0m: {performance_lowest_pct:.5%}')
+    print(f'\033[31mLOWEST DIFF\033[0m = \033[32mmodel{performance_highest_model}\033[0m: {performance_highest_pct:.5%}')
 
 # =======================================================================================================
 # train_val_scores END
