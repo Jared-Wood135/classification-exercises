@@ -26,11 +26,11 @@ The purpose of this file is to help with model evaluations and output their resp
 
 Friendly reminder...
 sklearn.metrics.confusion_matrix returns a 2x2 array which then means:
-    - True Positive (TP) = [0, 0]
+    - True Positive (TP) = [1, 1]
     - False Positive (FP) = [0, 1]
-    - True Negative (TN) = [1, 1]
+    - True Negative (TN) = [0, 0]
     - False Negative (FN) = [1, 0]
-    - POSITION OF LABELS DICTATE WHAT IS DETERMINED TP OR NOT
+    - Labels Define columns via [Negative Actual, Positive Actual]
 '''
 
 # =======================================================================================================
@@ -65,7 +65,7 @@ import explore
 # specificity START
 # =======================================================================================================
 
-def specificity(df, actual_col, Truelabel, Falselabel):
+def specificity(df, actual_col, Falselabel, Truelabel):
     '''
     Iterates through all columns with the specificity model metric...
     Specificity measures how well a model predicts negative outcomes...
@@ -73,8 +73,8 @@ def specificity(df, actual_col, Truelabel, Falselabel):
     '''
     ratios_dict = {}
     for col in df:
-        matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
-        result = (matrix[1, 1] / (matrix[0, 1] + matrix[1, 1]))
+        matrix = confusion_matrix(df[actual_col], df[col], labels=(Falselabel, Truelabel))
+        result = (matrix[0, 0] / (matrix[0, 1] + matrix[0, 0]))
         print(f'\033[32m{col}:\033[0m {result:.2%}\n')
         ratios_dict[col] = result
     del ratios_dict[actual_col]
@@ -114,7 +114,7 @@ def accuracy(df, actual_col):
 # precision START
 # =======================================================================================================
 
-def precision(df, actual_col, Truelabel, Falselabel):
+def precision(df, actual_col, Falselabel, Truelabel):
     '''
     Iterates through all columns with the precision model metric...
     Precision measures how many of the positive predictions were correct...
@@ -122,8 +122,8 @@ def precision(df, actual_col, Truelabel, Falselabel):
     '''
     ratios_dict = {}
     for col in df:
-        matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
-        ratio = (matrix[0, 0] / (matrix[0, 0] + matrix[0, 1]))
+        matrix = confusion_matrix(df[actual_col], df[col], labels=(Falselabel, Truelabel))
+        ratio = (matrix[1, 1] / (matrix[1, 1] + matrix[0, 1]))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
         ratios_dict[col] = ratio
     del ratios_dict[actual_col]
@@ -139,7 +139,7 @@ def precision(df, actual_col, Truelabel, Falselabel):
 # recall START
 # =======================================================================================================
 
-def recall(df, actual_col, Truelabel, Falselabel):
+def recall(df, actual_col, Falselabel, Truelabel):
     '''
     Iterates through all columns with the recall model metric...
     Recall measures how the model handled all positive outcomes...
@@ -147,8 +147,8 @@ def recall(df, actual_col, Truelabel, Falselabel):
     '''
     ratios_dict = {}
     for col in df:
-        matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
-        ratio = (matrix[0, 0] / (matrix[0, 0] + matrix[1, 0]))
+        matrix = confusion_matrix(df[actual_col], df[col], labels=(Falselabel, Truelabel))
+        ratio = (matrix[1, 1] / (matrix[1, 1] + matrix[1, 0]))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
         ratios_dict[col] = ratio
     del ratios_dict[actual_col]
@@ -164,7 +164,7 @@ def recall(df, actual_col, Truelabel, Falselabel):
 # sensitivity_true_positive_rate START
 # =======================================================================================================
 
-def sensitivity_true_positive_rate(df, actual_col, Truelabel, Falselabel):
+def sensitivity_true_positive_rate(df, actual_col, Falselabel, Truelabel):
     '''
     Iterates through all columns with the sensitivity true positive rate model metric...
     Sensitivity true positive rate measures the proportion of positives correctly identified...
@@ -172,8 +172,8 @@ def sensitivity_true_positive_rate(df, actual_col, Truelabel, Falselabel):
     '''
     ratios_dict = {}
     for col in df:
-        matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
-        ratio = (matrix[0, 0] / (matrix[0, 0] + matrix[1, 0]))
+        matrix = confusion_matrix(df[actual_col], df[col], labels=(Falselabel, Truelabel))
+        ratio = (matrix[1, 1] / (matrix[1, 1] + matrix[1, 0]))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
         ratios_dict[col] = ratio
     del ratios_dict[actual_col]
@@ -189,7 +189,7 @@ def sensitivity_true_positive_rate(df, actual_col, Truelabel, Falselabel):
 # negative_predictive_value START
 # =======================================================================================================
 
-def negative_predictive_value(df, actual_col, Truelabel, Falselabel):
+def negative_predictive_value(df, actual_col, Falselabel, Truelabel):
     '''
     Iterates through all columns with the negative predictive value model metric...
     Negative predictive value measures the probability that a predicted negative is a true negative...
@@ -197,8 +197,8 @@ def negative_predictive_value(df, actual_col, Truelabel, Falselabel):
     '''
     ratios_dict = {}
     for col in df:
-        matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
-        ratio = (matrix[1, 1] / (matrix[1, 1] + matrix[1, 0]))
+        matrix = confusion_matrix(df[actual_col], df[col], labels=(Falselabel, Truelabel))
+        ratio = (matrix[0, 0] / (matrix[0, 0] + matrix[1, 0]))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
         ratios_dict[col] = ratio
     del ratios_dict[actual_col]
@@ -214,7 +214,7 @@ def negative_predictive_value(df, actual_col, Truelabel, Falselabel):
 # f1_score START
 # =======================================================================================================
 
-def f1_score(df, actual_col, Truelabel, Falselabel):
+def f1_score(df, actual_col, Falselabel, Truelabel):
     '''
     Iterates through all columns with the f1 score model metric...
     F1 score measures a model's accuracy on a dataset...
@@ -222,9 +222,9 @@ def f1_score(df, actual_col, Truelabel, Falselabel):
     '''
     ratios_dict = {}
     for col in df:
-        matrix = confusion_matrix(df[actual_col], df[col], labels=(Truelabel, Falselabel))
-        precision = (matrix[0, 0] / (matrix[0, 0] + matrix[0, 1]))
-        recall = (matrix[0, 0] / (matrix[0, 0] + matrix[1, 0]))
+        matrix = confusion_matrix(df[actual_col], df[col], labels=(Falselabel, Truelabel))
+        precision = (matrix[1, 1] / (matrix[1, 1] + matrix[0, 1]))
+        recall = (matrix[1, 1] / (matrix[1, 1] + matrix[1, 0]))
         ratio = (2 * ((precision * recall) / (precision + recall)))
         print(f'\033[32m{col}:\033[0m {ratio:.2%}\n')
         ratios_dict[col] = ratio
