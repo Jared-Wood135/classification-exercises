@@ -64,17 +64,27 @@ def decisiontree_model_iterator(df, x_col, y_col, stratify, mindepthrange, maxde
     x_test = test[x_col]
     y_test = test[y_col]
     modelnum = 0
-    modelsdict = {}
+    # VVV Create base dictionary VVV
+    modelsdict = {
+        'model': 'Actual',
+        'features': df.drop(columns=stratify).columns.to_list(),
+        'feature_count': len(df.drop(columns=stratify).columns),
+        'train_score': 100,
+        'validate_score': 100,
+        'diff': 0
+    }
     # VVV Create, Fit, Predict Models VVV
     for i in range(int(mindepthrange), int(maxdepthrange)):
         modelnum += 1
         clf = DecisionTreeClassifier(max_depth=i)
         clf.fit(x_train, y_train)
         clf.predict(x_train)
-        modelsdict['model'] = f'clf{modelnum}'
-        modelsdict['train_score'] = round(clf.score(x_train, y_train), 5)
-        modelsdict['validate_score'] = round(clf.score(x_validate, y_validate), 5)
-        modelsdict['diff'] = round(abs((clf.score(x_train, y_train)) - (clf.score(x_validate, y_validate))), 5)
+        modelsdict['model'].append(modelnum)
+        modelsdict['features'].append()
+        modelsdict['feature_count'].append()
+        modelsdict['train_score'].append(round(clf.score(x_train, y_train), 5))
+        modelsdict['validate_score'].append(round(clf.score(x_validate, y_validate), 5))
+        modelsdict['diff'].append(round(abs((clf.score(x_train, y_train)) - (clf.score(x_validate, y_validate))), 5))
     return modelsdict
 
 # =======================================================================================================

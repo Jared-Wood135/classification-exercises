@@ -9,6 +9,7 @@
 4. categorical
 5. val_vs_cat
 6. mannwhitneyu
+7. swarms
 '''
 
 # =======================================================================================================
@@ -132,9 +133,17 @@ def mannwhitneyu(df):
             stat, pval = stats.mannwhitneyu(df[df[cat_col] == x[0]][y], df[df[cat_col] == x[1]][y])
             print(f'\033[32mStat:\033[0m {stat}\n\033[32mP-value:\033[0m {pval}\n')
 
-
+# =======================================================================================================
+# mannwhitneyu END
+# mannwhitneyu TO swarms
+# swarms START
+# =======================================================================================================
 
 def swarms(df):
+    '''
+    Takes in a dataframe and creates swarmplots for all of the combinations of categorical and
+    value columns
+    '''
     cat_col = []
     val_col = []
     for col in df:
